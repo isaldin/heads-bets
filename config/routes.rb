@@ -2,11 +2,20 @@ Hb::Application.routes.draw do
 
   get '/login' => 'auth#login'
   get '/logout' => 'auth#logout'
+
   root to: 'welcome#index'
 
   get '/charts' => 'charts#index'
   get '/charts/auth' => 'charts#auth'
 
+  get '/mybets' => 'bets#index'
+
+  get '/fake_session' => 'auth#fake_session'
+
+  resources :bets
+
+  get '/mybets/new' => 'bets#new'
+  post '/mybets/search' => 'bets#search'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

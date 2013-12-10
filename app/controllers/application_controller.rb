@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base
     session[:current_user]
   end
 
+  def current_user=(user)
+    session[:current_user] = user
+  end
+
+  helper_method :current_user
+  helper_method :current_user=
+
   private
 
   def check_access_rights

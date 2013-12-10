@@ -8,6 +8,15 @@
 </head>
 <body>
 
+<% if current_user %>
+    <%= link_to 'Мои ставки', :controller => :bets %>
+    <%= link_to 'Чарты', :controller => :charts %>
+
+    <%= current_user.name %>
+
+    <%= link_to 'Выйти', :controller => :auth, :action => :logout %>
+<% end %>
+
 <%= yield %>
 
 </body>
