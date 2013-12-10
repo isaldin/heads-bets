@@ -1,0 +1,8 @@
+//http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=&api_key=0e7add553b2e3a4e62e655323d407676&format=json
+{
+    "error":8,
+    "message":"search failed",
+    "links":[
+
+    ]
+}

@@ -1,4 +1,12 @@
-<%= form_tag(:action => :search, :method => :post) do %>
-    <%= text_field_tag 'search_string' %>
-    <%= button_to 'Найти' %>
+<%= form_tag(:action => :search) do %>
+    <%= text_field_tag 'search_string', @search_string %>
+    <%= button_tag 'Найти', :id => 'btnsrch' %>
 <% end %>
+
+<% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
+<% end %>
+
+<%= render 'search_results', :locals => @search_results %>

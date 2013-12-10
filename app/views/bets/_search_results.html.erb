@@ -1,0 +1,15 @@
+<ul>
+  <% @search_results.each_with_index do |artist, index| %>
+      <li>
+        <p>
+          <a href="<%= artist[:url] %>" target="_blank">
+            <img src="<%= artist[:img] %>" alt=""/>
+            <br>
+            <%= index %>
+            <%= artist[:name] %></a>
+          <br>
+        </p>
+        <hr>
+      </li>
+  <% end %>
+</ul>

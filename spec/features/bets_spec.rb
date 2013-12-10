@@ -7,12 +7,14 @@ describe 'bets' do
   before :each do
     @user = User.create!(:vk_id => 123456, :name => 'il.ya')
     page.set_rack_session(:current_user => @user)
+    @no_results_message = 'По вашему запросу ничего не найдено :('
+    @so_much_results_message = 'Найдено более 30 исполнителей.'
   end
   after :each do
     page.set_rack_session(:current_user => nil)
   end
 
-  it 'musts show all user bets' do
+  it 'musts show all user\'s bets' do
     #todo load bets
     visit '/mybets'
     page.should have_table 'bets'
@@ -25,6 +27,76 @@ describe 'bets' do
     current_path.should == '/mybets/new'
     page.should have_field 'search_string'
     page.should have_button 'Найти'
+  end
+
+  it 'musts show search results when correct artist with mbid looked up' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=chemo&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/chemo_request.json'), :status => 200)
+
+    visit '/mybets'
+    click_link 'new'
+    fill_in 'search_string', :with => 'chemo'
+    click_button 'Найти'
+    find('#search_string').value.should == 'chemo'
+
+    page.should have_content('The Chemodan')
+
+    page.should_not have_content(@no_results_message)
+    page.should_not have_content('The Chemodan Ft. Brick Bazuka')
+    page.should_not have_content('The Chemodan Ft. Sony Money')
+  end
+
+  it 'musts show no_results_message when nothing was found' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=enter%20shikaru&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/entershikaru_request.json'), :status => 200)
+
+    visit '/mybets'
+    click_link 'new'
+    fill_in 'search_string', :with => 'enter shikaru'
+    click_button 'Найти'
+    find('#search_string').value.should == 'enter shikaru'
+
+    page.should have_content(@no_results_message)
+  end
+
+  it 'musts show no_results_message when nothing with mbid was found' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%3Casdf%23%23?&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/nothing_with_mbid_was_found_request.json'), :status => 200)
+
+    visit '/mybets'
+    click_link 'new'
+    fill_in 'search_string', :with => '<asdf##?'
+    click_button 'Найти'
+    find('#search_string').value.should == '<asdf##?'
+
+    page.should have_content(@no_results_message)
+  end
+
+  #todo показывать suitable error msg
+  it 'musts show no_results_message when search request is invalid' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/error_request.json'), :status => 200)
+
+    visit '/mybets'
+    click_link 'new'
+    fill_in 'search_string', :with => ''
+    click_button 'Найти'
+    find('#search_string').value.should == ''
+
+    page.should have_content(@no_results_message)
+  end
+
+  it 'musts show so_much_results_message when search results more than 30' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=blood&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/more_than_30_results_request.json'), :status => 200)
+
+    visit '/mybets'
+    click_link 'new'
+    fill_in 'search_string', :with => 'blood'
+    click_button 'Найти'
+    find('#search_string').value.should == 'blood'
+
+    page.should have_content(@so_much_results_message)
   end
 
 end

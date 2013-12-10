@@ -12,10 +12,10 @@ Hb::Application.routes.draw do
 
   get '/fake_session' => 'auth#fake_session'
 
-  resources :bets
+  #resources :bets
 
   get '/mybets/new' => 'bets#new'
-  post '/mybets/search' => 'bets#search'
+  post '/bets/search' => 'bets#search'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
