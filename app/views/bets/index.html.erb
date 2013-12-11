@@ -1,2 +1,10 @@
 <%= link_to 'new', '/mybets/new' %>
-<table id="bets"></table>
+<table id="bets">
+  <% current_user.bets.each do |bet| %>
+      <tr>
+        <td>
+          <%= bet.artist_id %>
+        </td>
+      </tr>
+  <% end %>
+</table>

@@ -1,14 +1,13 @@
 <ul>
-  <% @search_results.each_with_index do |artist, index| %>
+  <% @search_results.each do |artist| %>
       <li>
         <p>
           <a href="<%= artist[:url] %>" target="_blank">
-            <img src="<%= artist[:img] %>" alt=""/>
-            <br>
-            <%= index %>
-            <%= artist[:name] %></a>
+            <img src="<%= artist[:img] %>" alt=""/><br><%= artist[:name] %>
+          </a>
           <br>
         </p>
+        <%= link_to 'Сделать ставку', new_user_bet_path(:artist => artist) %>
         <hr>
       </li>
   <% end %>

@@ -12,7 +12,7 @@ Hb::Application.routes.draw do
 
   get '/fake_session' => 'auth#fake_session'
 
-  #resources :bets
+  resources :user_bets
 
   get '/mybets/new' => 'bets#new'
   post '/bets/search' => 'bets#search'

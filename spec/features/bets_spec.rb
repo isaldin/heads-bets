@@ -12,6 +12,7 @@ describe 'bets' do
   end
   after :each do
     page.set_rack_session(:current_user => nil)
+    User.destroy_all
   end
 
   it 'musts show all user\'s bets' do
@@ -97,6 +98,22 @@ describe 'bets' do
     find('#search_string').value.should == 'blood'
 
     page.should have_content(@so_much_results_message)
+  end
+
+  it 'musts do bet' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=blood&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/more_than_30_results_request.json'), :status => 200)
+
+    visit '/mybets'
+    click_link 'new'
+    fill_in 'search_string', :with => 'blood'
+    click_button 'Найти'
+
+    @user.bets.size.should == 0
+    page.find('li', :text => 'Bloodhound Gang').click_link('Сделать ставку')
+    current_path.should == '/mybets'
+    @user.bets.size.should == 1
+    #todo table should has 1 row with 'Bloodhound Gang' content
   end
 
 end
