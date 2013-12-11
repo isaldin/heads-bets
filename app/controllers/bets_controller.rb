@@ -43,6 +43,7 @@ class BetsController < ApplicationController
                       elsif @search_results.size == 30
                         'Найдено более 30 исполнителей.'
                       end
+      flash[:error] << 'Максимальное число ставок - 10 - превышенно.' if current_user.bets.count == 10
     else
       flash[:error] = 'По вашему запросу ничего не найдено :('
     end

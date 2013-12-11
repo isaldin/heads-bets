@@ -7,7 +7,9 @@
           </a>
           <br>
         </p>
-        <%= link_to 'Сделать ставку', new_user_bet_path(:artist => artist) %>
+        <% if controller.current_user.bets.count < 10 %>
+            <%= link_to 'Сделать ставку', new_user_bet_path(:artist => artist) %>
+        <% end %>
         <hr>
       </li>
   <% end %>

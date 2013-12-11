@@ -132,4 +132,35 @@ describe 'bets' do
     end
   end
 
+  it 'shouldnt do bet if 10 bets of this user exist' do
+    uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=blood&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
+    stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/more_than_30_results_request.json'), :status => 200)
+
+    10.times do
+      artist = FactoryGirl.create :artist, :untitled
+      @user.do_bet artist
+    end
+    visit '/mybets'
+    all('table#bets tr').count.should == 10
+
+    click_link 'new'
+    fill_in 'search_string', :with => 'blood'
+    click_button 'Найти'
+
+    page.should_not have_link('Сделать ставку')
+    page.should have_content('Максимальное число ставок - 10 - превышенно.')
+
+    #todo move to controller or user_spec
+    @user.bets.count.should == 10
+    @user.do_bet(FactoryGirl.create :artist)
+    @user.bets.count.should == 10
+  end
+
+
+
+  it 'should be possible to remove bet'
+  it 'should be possible mark artist as marked as head by orgs'
+  it 'shouldnt be possible do bet if artist already is head'
+  it 'should show user bets page by link [{host}/by/{user_id}]'
+
 end
