@@ -11,10 +11,11 @@ gem 'capybara'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
-  gem 'rack_session_access'
 end
 group :test do
   gem 'webmock'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'rack_session_access'
 end
 
 # Gems used only for assets and not required

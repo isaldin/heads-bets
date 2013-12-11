@@ -3,7 +3,7 @@
   <% current_user.bets.each do |bet| %>
       <tr>
         <td>
-          <%= bet.artist_id %>
+          <%= bet.artist.name %>
         </td>
       </tr>
   <% end %>

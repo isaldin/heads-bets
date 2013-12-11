@@ -8,11 +8,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    session[:current_user]
+    User.find(session[:current_user]) if session[:current_user]
   end
 
   def current_user=(user)
-    session[:current_user] = user
+    session[:current_user] = user.id
   end
 
   helper_method :current_user

@@ -1,7 +1,7 @@
 class UserBetsController < ApplicationController
 
   def new
-    @artist = params[:artist]
+    @artist = Artist.new(params[:artist])
 
     current_user.do_bet(@artist)
 

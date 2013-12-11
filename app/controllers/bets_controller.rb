@@ -31,10 +31,10 @@ class BetsController < ApplicationController
       artists_json['results']['artistmatches']['artist'].each do |artist|
         unless artist['mbid'].empty?
           @search_results << {
-              mbid:  artist['mbid'],
-              name:  artist['name'],
-              url:   artist['url'],
-              img:   artist['image'].select{ |el| el['size'] == 'large' }.first['#text']
+              mbid:         artist['mbid'],
+              name:         artist['name'],
+              lastfm_url:   artist['url'],
+              image:        artist['image'].select{ |el| el['size'] == 'large' }.first['#text']
           }
         end
       end

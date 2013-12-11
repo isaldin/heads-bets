@@ -1,3 +1,6 @@
 class Bet < ActiveRecord::Base
-  attr_accessible :artist_id, :user_id
+  belongs_to :user
+  belongs_to :artist
+
+  attr_accessible :artist, :user, :artist_id, :user_id
 end

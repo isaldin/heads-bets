@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'bets' do
 
   before :each do
-    @user = User.create!(:vk_id => 123456, :name => 'il.ya')
+    @user = FactoryGirl.create :user
     page.set_rack_session(:current_user => @user)
     @no_results_message = 'По вашему запросу ничего не найдено :('
     @so_much_results_message = 'Найдено более 30 исполнителей.'
@@ -100,7 +100,7 @@ describe 'bets' do
     page.should have_content(@so_much_results_message)
   end
 
-  it 'musts do bet' do
+  it 'musts correct do bets' do
     uri = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=blood&api_key=0e7add553b2e3a4e62e655323d407676&format=json'
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/more_than_30_results_request.json'), :status => 200)
 
@@ -109,11 +109,15 @@ describe 'bets' do
     fill_in 'search_string', :with => 'blood'
     click_button 'Найти'
 
-    @user.bets.size.should == 0
+    @user.bets.count.should == 0
     page.find('li', :text => 'Bloodhound Gang').click_link('Сделать ставку')
     current_path.should == '/mybets'
-    @user.bets.size.should == 1
+    @user.bets.count.should == 1
     #todo table should has 1 row with 'Bloodhound Gang' content
+    within_table 'bets' do
+      all('tr').count.should == 1
+      all('tr')[0].should have_content('Bloodhound Gang')
+    end
   end
 
 end
