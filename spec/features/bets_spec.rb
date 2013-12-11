@@ -16,9 +16,19 @@ describe 'bets' do
   end
 
   it 'musts show all user\'s bets' do
-    #todo load bets
     visit '/mybets'
-    page.should have_table 'bets'
+    within_table 'bets' do
+      all('tr').count.should == 0
+    end
+
+    @artist = FactoryGirl.build :artist
+    @user.do_bet @artist
+    visit '/mybets'
+    within_table 'bets' do
+      all('tr').count.should == 1
+      all('tr')[0].should have_content('Limp Bizkit')
+    end
+
     page.should have_link 'new'
   end
 
@@ -113,7 +123,7 @@ describe 'bets' do
     page.find('li', :text => 'Bloodhound Gang').click_link('Сделать ставку')
     current_path.should == '/mybets'
     @user.bets.count.should == 1
-    #todo table should has 1 row with 'Bloodhound Gang' content
+
     within_table 'bets' do
       all('tr').count.should == 1
       all('tr')[0].should have_content('Bloodhound Gang')
