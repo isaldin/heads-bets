@@ -13,10 +13,13 @@ describe 'bets' do
   after :each do
     page.set_rack_session(:current_user => nil)
     User.destroy_all
+    Bet.destroy_all
+    Artist.destroy_all
   end
 
   it 'musts show all user\'s bets' do
     visit '/mybets'
+    page.should have_link 'new'
     within_table 'bets' do
       all('tr').count.should == 0
     end
@@ -24,12 +27,11 @@ describe 'bets' do
     @artist = FactoryGirl.build :artist
     @user.do_bet @artist
     visit '/mybets'
+    page.should have_link 'new'
     within_table 'bets' do
       all('tr').count.should == 1
       all('tr')[0].should have_content('Limp Bizkit')
     end
-
-    page.should have_link 'new'
   end
 
   it 'musts show adding form when new-link clicked' do
