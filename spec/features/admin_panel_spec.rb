@@ -21,6 +21,15 @@ describe 'Admin Panel' do
     page.should have_content('Add head')
   end
 
-  it 'should be possible mark artist as marked as head by orgs'
+  #it 'should be possible mark artist as head' do
+  #  page.set_rack_session(:current_user => FactoryGirl.create(:user, :admin).id)
+  #  visit '/admin'
+  #
+  #  fill_in 'head_mbid', :with => 'some_mbid'
+  #  click_button 'add'
+  #
+  #  Artist.find_by_mbid('some_mbid').count.should == 1
+  #  Artist.find_by_mbid('some_mbid').first.is_head.should == true
+  #end
 
 end

@@ -8,6 +8,12 @@
 </head>
 <body>
 
+<% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
+<% end %>
+
 <% if current_user %>
     <%= link_to 'Мои ставки', :controller => :bets %>
     <%= link_to 'Чарты', :controller => :charts %>
