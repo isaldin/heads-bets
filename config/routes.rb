@@ -16,6 +16,8 @@ Hb::Application.routes.draw do
 
   get '/mybets/new' => 'bets#new'
   post '/bets/search' => 'bets#search'
+
+  get '/admin' => 'admin#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

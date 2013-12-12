@@ -175,7 +175,6 @@ describe 'bets' do
   end
 
 
-  it 'should be possible mark artist as marked as head by orgs'
   it 'shouldnt be possible do bet if artist already is head'
   it 'should show user bets page by link [{host}/by/{user_id}]'
 

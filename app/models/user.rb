@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :name,
                   :vk_id,
-                  :id
+                  :id,
+                  :is_admin
 
   def do_bet(artist)
     return if bets.count == 10

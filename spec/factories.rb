@@ -3,6 +3,12 @@ FactoryGirl.define do
   factory :user do
     vk_id '123456'
     name 'il.ya'
+    is_admin false
+
+    trait :admin do
+      is_admin true
+    end
+
   end
 
   factory :artist do
