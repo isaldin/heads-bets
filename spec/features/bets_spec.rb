@@ -156,9 +156,25 @@ describe 'bets' do
     @user.bets.count.should == 10
   end
 
+  it 'should be possible to remove bet' do
+    [:lb, :soad, :ratm, :bhg].each do |name|
+      @user.do_bet FactoryGirl.create(:artist, name)
+    end
+    visit '/mybets'
+    all('table#bets tr').count.should == 4
+
+    page.find('table#bets tr', :text => 'Bloodhound Gang').find('a.remove_bet').click
+    page.should_not have_content('Bloodhound Gang')
+    all('table#bets tr').count.should == 3
+
+    page.find('table#bets tr', :text => 'System of a Down').find('a.remove_bet').click
+    page.should_not have_content('System of a Down')
+    all('table#bets tr').count.should == 2
+
+    @user.bets.count.should == 2
+  end
 
 
-  it 'should be possible to remove bet'
   it 'should be possible mark artist as marked as head by orgs'
   it 'shouldnt be possible do bet if artist already is head'
   it 'should show user bets page by link [{host}/by/{user_id}]'

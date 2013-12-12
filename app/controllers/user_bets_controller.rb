@@ -8,4 +8,10 @@ class UserBetsController < ApplicationController
     redirect_to controller: :bets
   end
 
+  def destroy
+    Bet.find(params[:id]).destroy
+
+    redirect_to :controller => :bets, :action => :index
+  end
+
 end

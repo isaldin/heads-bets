@@ -5,6 +5,9 @@
         <td>
           <%= bet.artist.name %>
         </td>
+        <td>
+          <%= link_to '[X]', user_bet_path(bet.id), :method => :delete, :class => 'remove_bet' %>
+        </td>
       </tr>
   <% end %>
 </table>
