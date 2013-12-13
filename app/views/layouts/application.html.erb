@@ -22,9 +22,9 @@
   <style type="text/css">
       .li_active
       {
-          background: #f34c31; color: #fff; border: 0;
+          background: #000000; color: #fff; border: 0;
           font-weight: bold;
-          width: 100%;
+          /*width: 100%;*/
           -webkit-transition: all .2s ease-in-out;
           -moz-transition: all .2s ease-in-out;
           -ms-transition: all .2s ease-in-out;
@@ -32,6 +32,7 @@
           transition: all .2s ease-in-out;
       }
   </style>
+
 
 </head>
 <body>
@@ -55,7 +56,7 @@
           <li class="">
 
           </li>
-          <li class="<%= 'li_active' if request.fullpath == '/mybets/new' %>">
+          <li class="<%= 'li_active' if request.fullpath == '/mybets/new' || request.fullpath ==  '/bets/search' %>">
             <%= link_to 'Сделать ставку!', '/mybets/new', :class => :newbet %>
           </li>
           <li class="">

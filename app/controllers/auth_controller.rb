@@ -21,6 +21,20 @@ class AuthController < ApplicationController
     redirect_to '/'
   end
 
+  def do_it
+    parse_token params[:format]
+
+    redirect_to '/'
+  end
+
+  def parse_token(token)
+    res = []
+    token.split('&').each { |el| res << el.split('=') }
+
+    @auth_params = Hash[*res.flatten!]
+    @auth_params.symbolize_keys!
+  end
+
   private
 
   def check_if_already_authenticated

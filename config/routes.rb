@@ -6,7 +6,7 @@ Hb::Application.routes.draw do
   root to: 'welcome#index'
 
   get '/charts' => 'charts#index'
-  get '/charts/auth' => 'charts#auth'
+  match '/auth/do_it(&:format)' => 'auth#do_it'
 
   get '/mybets' => 'bets#index'
 
