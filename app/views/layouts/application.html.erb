@@ -24,6 +24,7 @@
       {
           background: #f34c31; color: #fff; border: 0;
           font-weight: bold;
+          width: 100%;
           -webkit-transition: all .2s ease-in-out;
           -moz-transition: all .2s ease-in-out;
           -ms-transition: all .2s ease-in-out;
@@ -45,16 +46,16 @@
 
     <% if current_user %>
         <ul id="menu-header" class="nav-bar horizontal">
-          <li class="li_active">
+          <li class="<%= 'li_active' if request.fullpath == '/mybets' %>">
             <%= link_to 'Мои ставки', :controller => :bets %>
           </li>
-          <li class="">
+          <li class="<%= 'li_active' if request.fullpath == '/charts' %>">
             <%= link_to 'Чарты', :controller => :charts %>
           </li>
           <li class="">
 
           </li>
-          <li class="" style="font-weight: bold;">
+          <li class="<%= 'li_active' if request.fullpath == '/mybets/new' %>">
             <%= link_to 'Сделать ставку!', '/mybets/new', :class => :newbet %>
           </li>
           <li class="">
@@ -88,11 +89,18 @@
 <div class="twelve columns">
   <!-- page wrap -->
 
-  <% flash.each do |name, msg| %>
-      <% if msg.is_a?(String) %>
-          <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <% end %>
-  <% end %>
+  <!--alerts-->
+  <div class="row page_wrap" style="margin-top:-2px">
+    <% flash.each do |name, msg| %>
+        <% if msg.is_a?(String) %>
+            <h4 style="text-align: center;">
+              <span class="heading_center_bg" style="font-family: Georgia, 'Times New Roman', Times, serif;">
+                <%= msg %>
+              </span>
+            </h4>
+        <% end %>
+    <% end %>
+  </div>
 
   <%= yield %>
 

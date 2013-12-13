@@ -1,5 +1,13 @@
-<% @bets.each do |b| %>
-    <h3>
-      <%= b.artist.name %>
-    </h3>
+<% @artists.each do |a| %>
+    <div class="row page_wrap" style="margin-top:-2px">
+      <div class="heading_dots_grey">
+        <h2 style="text-align: center;" class="heading">
+              <span class="heading_center_bg">
+                <a href="<%= a.lastfm_url %>" target="_blank">
+                  <%= "#{a.name} (#{Bet.where("artist_id=#{a.id}").count})" %>
+                </a>
+              </span>
+        </h2>
+      </div>
+    </div>
 <% end %>
