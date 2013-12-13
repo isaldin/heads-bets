@@ -1,6 +1,31 @@
-<%= form_tag(:action => :search) do %>
-    <%= text_field_tag 'search_string', @search_string %>
-    <%= button_tag 'Найти', :id => 'btnsrch' %>
-<% end %>
+<div class="row page_wrap" style="margin-top:-2px">
+  <!-- page wrap -->
+  <div class="twelve columns">
+    <!-- page wrap -->
+
+    <div class="row">
+
+      <div class="heading_dots hide-for-small">
+        <h2 class="heading_supersize">
+          <span class="heading_center_bg">
+            Поиск
+          </span>
+        </h2>
+      </div>
+
+      <div class="twelve columns">
+        <%= form_tag(:action => :search) do %>
+            <%= text_field_tag 'search_string', @search_string %>
+            <p style="text-align:center">
+              <%= button_tag 'Найти', :id => 'btnsrch', :class=> 'button large round' %>
+            </p>
+        <% end %>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 <%= render 'search_results', :locals => @search_results %>

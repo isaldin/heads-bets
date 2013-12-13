@@ -13,7 +13,7 @@ describe 'authentication' do
       visit url
       current_path.should == '/login'
       page.should have_content('Пожалуйста, авторизуйтесь с помощью учетной записи ВКонтакте')
-      page.should have_button 'Войти'
+      page.should have_link 'Войти'
     end
   end
 
@@ -39,7 +39,6 @@ describe 'authentication' do
         page.should have_link 'Чарты'
 
         #statusbar
-        page.should have_content 'il.ya'
         page.should have_link 'Выйти'
       end
     end

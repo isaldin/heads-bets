@@ -34,7 +34,7 @@ class BetsController < ApplicationController
               mbid:         artist['mbid'],
               name:         artist['name'],
               lastfm_url:   artist['url'],
-              image:        artist['image'].select{ |el| el['size'] == 'large' }.first['#text']
+              image:        artist['image'].select{ |el| el['size'] == 'extralarge' }.first['#text']
           }
         end
       end

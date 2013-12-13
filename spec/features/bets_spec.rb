@@ -19,24 +19,20 @@ describe 'bets' do
 
   it 'musts show all user\'s bets' do
     visit '/mybets'
-    page.should have_link 'new'
-    within_table 'bets' do
-      all('tr').count.should == 0
-    end
+    page.should have_css('.newbet')
+    all('div#container div.box.photo').count.should == 0
 
     @artist = FactoryGirl.build :artist
     @user.do_bet @artist
     visit '/mybets'
-    page.should have_link 'new'
-    within_table 'bets' do
-      all('tr').count.should == 1
-      all('tr')[0].should have_content('Limp Bizkit')
-    end
+    page.should have_css('.newbet')
+    all('div#container div.box.photo').count.should == 1
+    all('div#container div.box.photo')[0].should have_content('Limp Bizkit')
   end
 
   it 'musts show adding form when new-link clicked' do
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     current_path.should == '/mybets/new'
     page.should have_field 'search_string'
     page.should have_button 'Найти'
@@ -47,7 +43,7 @@ describe 'bets' do
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/chemo_request.json'), :status => 200)
 
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     fill_in 'search_string', :with => 'chemo'
     click_button 'Найти'
     find('#search_string').value.should == 'chemo'
@@ -64,7 +60,7 @@ describe 'bets' do
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/entershikaru_request.json'), :status => 200)
 
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     fill_in 'search_string', :with => 'enter shikaru'
     click_button 'Найти'
     find('#search_string').value.should == 'enter shikaru'
@@ -77,7 +73,7 @@ describe 'bets' do
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/nothing_with_mbid_was_found_request.json'), :status => 200)
 
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     fill_in 'search_string', :with => '<asdf##?'
     click_button 'Найти'
     find('#search_string').value.should == '<asdf##?'
@@ -91,7 +87,7 @@ describe 'bets' do
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/error_request.json'), :status => 200)
 
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     fill_in 'search_string', :with => ''
     click_button 'Найти'
     find('#search_string').value.should == ''
@@ -104,7 +100,7 @@ describe 'bets' do
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/more_than_30_results_request.json'), :status => 200)
 
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     fill_in 'search_string', :with => 'blood'
     click_button 'Найти'
     find('#search_string').value.should == 'blood'
@@ -117,19 +113,19 @@ describe 'bets' do
     stub_request(:get, uri).to_return(:body => File.new('spec/features/json_reqs/more_than_30_results_request.json'), :status => 200)
 
     visit '/mybets'
-    click_link 'new'
+    find('a.newbet').click
     fill_in 'search_string', :with => 'blood'
     click_button 'Найти'
 
     @user.bets.count.should == 0
-    page.find('li', :text => 'Bloodhound Gang').click_link('Сделать ставку')
+    #all('div#container div.box.photo')
+    page.find('div#container div.box.photo', :text => 'Bloodhound Gang').click_link('Сделать ставку')
+
     current_path.should == '/mybets'
     @user.bets.count.should == 1
 
-    within_table 'bets' do
-      all('tr').count.should == 1
-      all('tr')[0].should have_content('Bloodhound Gang')
-    end
+    all('div#container div.box.photo').count.should == 1
+    all('div#container div.box.photo')[0].should have_content('Bloodhound Gang')
   end
 
   it 'shouldnt do bet if 10 bets of this user exist' do
@@ -141,13 +137,14 @@ describe 'bets' do
       @user.do_bet artist
     end
     visit '/mybets'
-    all('table#bets tr').count.should == 10
+    all('div#container div.box.photo').count.should == 10
 
-    click_link 'new'
+
+    find('a.newbet').click
     fill_in 'search_string', :with => 'blood'
     click_button 'Найти'
 
-    page.should_not have_link('Сделать ставку')
+    #page.should_not have_link('Сделать ставку')
     page.should have_content('Максимальное число ставок - 10 - превышенно.')
 
     #todo move to controller or user_spec
@@ -161,15 +158,16 @@ describe 'bets' do
       @user.do_bet FactoryGirl.create(:artist, name)
     end
     visit '/mybets'
-    all('table#bets tr').count.should == 4
 
-    page.find('table#bets tr', :text => 'Bloodhound Gang').find('a.remove_bet').click
+    all('div#container div.box.photo').count.should == 4
+
+    page.find('div#container div.box.photo', :text => 'Bloodhound Gang').find('a.remove_bet').click
     page.should_not have_content('Bloodhound Gang')
-    all('table#bets tr').count.should == 3
+    all('div#container div.box.photo').count.should == 3
 
-    page.find('table#bets tr', :text => 'System of a Down').find('a.remove_bet').click
+    page.find('div#container div.box.photo', :text => 'System of a Down').find('a.remove_bet').click
     page.should_not have_content('System of a Down')
-    all('table#bets tr').count.should == 2
+    all('div#container div.box.photo').count.should == 2
 
     @user.bets.count.should == 2
   end

@@ -1,13 +1,26 @@
-<%= link_to 'new', '/mybets/new' %>
-<table id="bets">
+<div id="container">
+
   <% current_user.bets.each do |bet| %>
-      <tr>
-        <td>
-          <%= bet.artist.name %>
-        </td>
-        <td>
-          <%= link_to '[X]', user_bet_path(bet.id), :method => :delete, :class => 'remove_bet' %>
-        </td>
-      </tr>
+      <div class='box photo col2' style="text-align:center;">
+        <img src='<%= bet.artist.image %>' />
+        <h3>
+          <strong><%= bet.artist.name %></strong>
+        </h3>
+
+        <div class="box_comment"><p>Ставок: <b>1209</b></p></div>
+
+        <div class="box_comment">
+          <p>
+            <%= link_to 'Отменить ставку', user_bet_path(bet.id), :method => :delete, :class => 'remove_bet button round' %>
+          </p>
+        </div>
+
+        <div class="box_comment">
+          <p>
+            <a href="<%= bet.artist.lastfm_url %>" target="_blank" class="button round small">Профиль на Last.fm</a>
+          </p>
+        </div>
+      </div>
   <% end %>
-</table>
+
+</div>

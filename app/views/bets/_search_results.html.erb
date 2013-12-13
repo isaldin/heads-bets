@@ -1,16 +1,28 @@
-<ul>
+<div id="container">
+
   <% @search_results.each do |artist| %>
-      <li>
-        <p>
-          <a href="<%= artist[:lastfm_url] %>" target="_blank">
-            <img src="<%= artist[:image] %>" alt=""/><br><%= artist[:name] %>
-          </a>
-          <br>
-        </p>
-        <% if controller.current_user.bets.count < 10 %>
-            <%= link_to 'Сделать ставку', new_user_bet_path(:artist => artist) %>
-        <% end %>
-        <hr>
-      </li>
+      <div class='box photo col2' style="text-align:center;">
+        <img src="<%= artist[:image] %>" alt=""/>
+        <h3>
+          <br><%= artist[:name] %>
+        </h3>
+
+        <div class="box_comment"><p>Ставок: <b>1209</b></p></div>
+
+        <div class="box_comment">
+          <p>
+            <% if controller.current_user.bets.count < 10 %>
+                <%= link_to 'Сделать ставку', new_user_bet_path(:artist => artist), :class => 'remove_bet button round' %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="box_comment">
+          <p>
+            <a href="<%= artist[:lastfm_url] %>" target="_blank" class="button round small">Профиль на Last.fm</a>
+          </p>
+        </div>
+      </div>
   <% end %>
-</ul>
+
+</div>
