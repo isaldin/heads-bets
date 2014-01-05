@@ -24,8 +24,16 @@ h1,h2,h3,h4 {font-family:'Open Sans Condensed',sans-serif; font-weight: normal}
 .heading_bg {background:#FFF; padding: 0 6px}
 .heading_center_bg {background:#FFF; padding:0 10px}
 
-.heading_supersize {font-size: 74px; text-align:center; font-weight: normal; line-height: normal; margin:0 0 10px}
-.heading_largesize {font-size: 44px; text-align:center; font-weight: normal}
+.heading_supersize
+{
+    font-size: 74px;
+    text-align:center;
+    font-weight: normal;
+    line-height: normal;
+    margin:0 0 10px;
+    font-family: 'Lobster', cursive;
+}
+.heading_largesize {font-size: 44px; text-align:center; font-weight: normal; font-family: 'Lobster', cursive;}
 
 .dropcap_red, 
 .dropcap_black {  

@@ -31,8 +31,7 @@ class AuthController < ApplicationController
     res = []
     token.split('&').each { |el| res << el.split('=') }
 
-    @auth_params = Hash[*res.flatten!]
-    @auth_params.symbolize_keys!
+    @auth_params = Hash[*res.flatten!].symbolize_keys!
   end
 
   private
