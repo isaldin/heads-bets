@@ -51,4 +51,6 @@ class BetsController < ApplicationController
     render :new
   end
 
+#this is change from other developer (dev2), that created, commited and pushed after creating new local branch feat by dev1
+
 end
