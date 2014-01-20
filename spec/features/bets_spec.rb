@@ -173,7 +173,7 @@ describe 'bets' do
   end
 
 
-  it 'shouldnt be possible do bet if artist already is head'
-  it 'should show user bets page by link [{host}/by/{user_id}]'
+  #it 'shouldnt be possible do bet if artist already is head'
+  #it 'should show user bets page by link [{host}/by/{user_id}]'
 
 end
