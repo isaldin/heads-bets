@@ -1,17 +1,11 @@
 <div id="container">
 
-  <span>
-    changes in branch br2
-  </span>
-
   <% @search_results.each do |artist| %>
       <div class='box photo col2' style="text-align:center;">
         <img src="<%= artist[:image] %>" alt=""/>
         <h3>
           <br><%= artist[:name] %>
         </h3>
-
-        <!--test-->
 
         <div class="box_comment"><p>Ставок: <b>1209</b></p></div>
 
@@ -30,7 +24,5 @@
         </div>
       </div>
   <% end %>
-
-  <span>TADAH!</span>
 
 </div>
